@@ -6,15 +6,10 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(255);
   juego.actualizar();
-  juego.mostrar();
 }
 
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    juego.canasta.mover("izquierda");
-  } else if (keyCode === RIGHT_ARROW) {
-    juego.canasta.mover("derecha");
-  }
+function mousePressed() {
+  juego.mousePressed();
 }

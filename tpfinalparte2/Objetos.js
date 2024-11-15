@@ -1,56 +1,65 @@
-class Objetos {
-  constructor(nivel) {
-    this.lista = [];
-    this.nivel = nivel;
-  }
-
-  generarObjetos() {
-    let cantidadConejos = 5 + this.nivel * 5; //de aca se ajusta la cant
-    let cantidadObjetos = 2 + this.nivel * 2;
-
-    for (let i = 0; i < cantidadConejos; i++) {
-      this.lista.push(new Conejo(this.nivel));
-    }
-    for (let i = 0; i < cantidadObjetos; i++) {
-      this.lista.push(new ObjetoNoDeseado(this.nivel));
-    }
-  }
-
-  obtenerLista() {
-    return this.lista;
-  }
-}
-
 class Conejo {
-  constructor(nivel) {
-    this.x = random(width); //le puse random pero capaz se puede pooner un if
-    this.y = 0;
-    this.velocidad = 2 + nivel;
+  constructor() {
+    this.tipo = int(random(0, 2)); // 0: conejo, 1: no deseado
+    this.reiniciarUbicacion();
+    this.despY = random(2, 4);
+    this.lado = 30;
   }
 
-  caer() {
-    this.y += this.velocidad;
+  actualizar() {
+    this.y += this.despY;
+    if (this.y > height) {
+      this.reiniciarUbicacion();
+    }
+    this.dibujar();
   }
 
-  mostrar() {
-    fill(0, 255, 0); // verde para los conejos
-    ellipse(this.x, this.y, 20, 20); // representación del conejo /poner img
+  dibujar() {
+    fill(this.tipo === 0 ? "green" : "red");
+    ellipse(this.x, this.y, this.lado);
+  }
+
+  reiniciarUbicacion() {
+    this.x = random(50, width - 50);
+    this.y = -random(100, 400);
+  }
+
+  evaluaColision(px, py, pw) {
+    return (
+      this.y > py - 10 &&
+      this.y < py + 10 &&
+      this.x > px - pw / 2 &&
+      this.x < px + pw / 2
+    );
   }
 }
 
-class ObjetoNoDeseado {
-  constructor(nivel) {
-    this.x = random(width);
-    this.y = 0;
-    this.velocidad = 2 + nivel;
+class Boton {
+  constructor(txt, x, y, ancho, alto) {
+    this.txt = txt;
+    this.x = x;
+    this.y = y;
+    this.ancho = ancho;
+    this.alto = alto;
+    this.colorReposo = color(100, 220, 0);
+    this.colorOver = color(255, 100, 100);
   }
 
-  caer() {
-    this.y += this.velocidad;
+  actualizar() {
+    fill(this.colisionMouse() ? this.colorOver : this.colorReposo);
+    rectMode(CENTER);
+    rect(this.x, this.y, this.ancho, this.alto, 5);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    text(this.txt, this.x, this.y);
   }
 
-  mostrar() {
-    fill(255, 0, 0); // rojo para objetos no deseados
-    rect(this.x, this.y, 20, 20); // representación del objeto no deseado,,, poner img
+  colisionMouse() {
+    return (
+      mouseX > this.x - this.ancho / 2 &&
+      mouseX < this.x + this.ancho / 2 &&
+      mouseY > this.y - this.alto / 2 &&
+      mouseY < this.y + this.alto / 2
+    );
   }
 }
