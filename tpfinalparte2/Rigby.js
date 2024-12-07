@@ -1,14 +1,15 @@
 class Rigby {
-  constructor(posX, posY) {
+  constructor(posX, posY, juego) {
     this.posX = posX;
     this.posY = posY;
-    this.tam = 30; // tamdel personaje
+    this.tam = 30;
+    this.juego = juego;
   }
 
   dibujar() {
     push();
     imageMode(CENTER);
-    image(rigbysprite, this.posX, this.posY); // imagen de Rigby
+    image(rigbysprite, this.posX, this.posY);
     pop();
   }
 
@@ -27,15 +28,12 @@ class Rigby {
   moverDerecha() {
     this.posX += 10;
   }
-
   moverIzquierda() {
     this.posX -= 10;
   }
-
   moverArriba() {
     this.posY -= 10;
   }
-
   moverAbajo() {
     this.posY += 10;
   }

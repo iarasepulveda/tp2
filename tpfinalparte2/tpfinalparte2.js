@@ -1,35 +1,46 @@
 let objJuego;
-//falta variable global para el sonido
+let miCancion;
 
 function preload() {
   rigbysprite = loadImage("data/rigbysprite.png");
   mordecaisprite = loadImage("data/mordecaisprite.png");
   bensonsprite = loadImage("data/bensonsprite.png");
+  fondoDelJuego = loadImage("data/fondoDelJuego.jpg");
+  miCancion = loadSound("data/cancion1.mp3");
 }
 
 function setup() {
   createCanvas(640, 480);
-  objJuego = new Juego(10); // inicializa el objeto Juego, si queres cambia el nombre a Juego en vez de objJuego a
+  objJuego = new Juego(0);
 }
 
 function draw() {
   background(0);
-  objJuego.dibujar(); // dibuja el estado actual del juego, 
-}
+  image(fondoDelJuego, 0, 0, width, height);
+  textSize(24);
+  fill(255);
+  textAlign(RIGHT);
+  text("Nivel: " + objJuego.nivel, width - 20, 40);
 
+  objJuego.dibujar();
+}
 function keyPressed() {
   if (objJuego.estado === "jugando") {
-    objJuego.rigby1.teclaPresionada(); // permite mover a Rigby
+    objJuego.teclaPresionada();
   }
 }
 
 function mousePressed() {
+
+  if (!miCancion.isPlaying()) {
+    miCancion.loop();
+    objJuego.audioReproducido = true; // musica como reproducida
+  }
+
   if (objJuego.estado === "tutorial") {
-    // verifica los clics en los botones
     objJuego.crearTutorial();
   }
   if (objJuego.estado === "ganaste" || objJuego.estado === "perdiste") {
-    // cuando estas en la pantalla de fin de juego, se muestra el botón de reiniciar
     objJuego.mostrarReinicio();
   }
 }

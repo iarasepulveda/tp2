@@ -6,10 +6,11 @@ class Salida {
   }
 
   salidaDelVideojuego() {
+    console.log("Dibujando salida en:", this.posX, this.posY);
     push();
     rectMode(CENTER);
     fill(0, 50, 200);
-    rect(this.posX, this.posY, this.tam, this.tam); // dibuja la salida
+    rect(this.posX, this.posY, this.tam, this.tam);
     pop();
   }
 

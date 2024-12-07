@@ -8,7 +8,7 @@ class Benson {
   dibujar() {
     push();
     imageMode(CENTER);
-    image(bensonsprite, this.posX, this.posY); // imagen de Benson
+    image(bensonsprite, this.posX, this.posY);
     pop();
   }
 
